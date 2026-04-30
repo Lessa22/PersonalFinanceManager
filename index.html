@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Personal Finance Manager</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+
+  //sidebar
+
+  <aside id="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-icon">💰</div>
+      <h1>Finance Manager</h1>
+      <span>Personnel · Ariary</span>
+    </div>
+    <nav>
+      <div class="nav-label">Principal</div>
+      <a class="nav-link active" data-page="dashboard"><span class="nav-icon">📊</span> Tableau de bord</a>
+      <a class="nav-link" data-page="budget"><span class="nav-icon">💳</span> Budget mensuel</a>
+      <a class="nav-link" data-page="upcoming"><span class="nav-icon">📅</span> Dépenses à venir</a>
+      <a class="nav-link" data-page="goals"><span class="nav-icon">🎯</span> Objectifs d'épargne</a>
+      <div class="nav-label">Analyse</div>
+      <a class="nav-link" data-page="history"><span class="nav-icon">🕑</span> Historique</a>
+      <div class="nav-label">Système</div>
+      <a class="nav-link" data-page="settings"><span class="nav-icon">⚙️</span> Paramètres</a>
+    </nav>
+    <div class="sidebar-footer">
+      Données locales uniquement<br />
+      <strong id="sidebar-balance">Ar 0</strong>
+    </div>
+  </aside>
+  
+//Main
+  <main id="main">
+    <div id="page-container"></div>
+  </main>
+
+    //Modals
+
+  <div class="modal-overlay" id="modal-deposit">
+    <div class="modal">
+      <div class="modal-title">💰 Effectuer un dépôt</div>
+      <div class="form-group"><label>Montant (Ar)</label><input type="number" id="deposit-amount" placeholder="0" min="1" /></div>
+      <div class="form-group" style="margin-top:12px"><label>Note (facultatif)</label><input type="text" id="deposit-note" placeholder="ex: Économie du mois" /></div>
+      <div class="modal-footer">
+        <button class="btn btn-ghost" onclick="UI.closeModal('modal-deposit')">Annuler</button>
+        <button class="btn btn-success" onclick="Goals.saveDeposit()">Déposer</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="modal-goal">
+    <div class="modal">
+      <div class="modal-title" id="modal-goal-title">🎯 Nouvel objectif</div>
+      <div class="form-group"><label>Nom de l'objectif</label><input type="text" id="goal-name" placeholder="ex: Vacances, Voiture…" /></div>
+      <div class="form-row cols-2" style="margin-top:12px">
+        <div class="form-group"><label>Montant cible (Ar)</label><input type="number" id="goal-target" placeholder="0" min="0" /></div>
+        <div class="form-group"><label>Échéance (facultatif)</label><input type="date" id="goal-deadline" /></div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-ghost" onclick="UI.closeModal('modal-goal')">Annuler</button>
+        <button class="btn btn-primary" onclick="Goals.saveGoal()">Enregistrer</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="modal-cat">
+    <div class="modal">
+      <div class="modal-title">🏷 Nouvelle catégorie</div>
+      <div class="form-group"><label>Nom</label><input type="text" id="cat-name" placeholder="ex: Alimentation, Loisirs…" /></div>
+      <div class="form-group" style="margin-top:12px"><label>Couleur</label><div class="color-options" id="color-options"></div></div>
+      <div class="form-group" style="margin-top:12px">
+        <label>Sous-catégories (appuyer Entrée pour ajouter)</label>
+        <input type="text" id="new-subcat-input" placeholder="ex: Épicerie, Restaurant…"
+               onkeydown="if(event.key==='Enter'){event.preventDefault();Settings.addSubCatChip()}" />
+      </div>
+      <div class="chips" id="new-subcats-chips"></div>
+      <div class="modal-footer">
+        <button class="btn btn-ghost" onclick="UI.closeModal('modal-cat')">Annuler</button>
+        <button class="btn btn-primary" onclick="Settings.saveCat()">Créer</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="modal-subcat">
+    <div class="modal" style="max-width:360px">
+      <div class="modal-title">+ Sous-catégorie</div>
+      <div class="form-group"><label>Nom</label><input type="text" id="subcat-name" placeholder="Sous-catégorie…" /></div>
+      <div class="modal-footer">
+        <button class="btn btn-ghost" onclick="UI.closeModal('modal-subcat')">Annuler</button>
+        <button class="btn btn-primary" onclick="Settings.saveSubCat()">Ajouter</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast-container"></div>
+
+  //Les scripts
+  <script src="js/storage.js"></script>
+  <script src="js/state.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/dashboard.js"></script>
+  <script src="js/budget.js"></script>
+  <script src="js/upcoming.js"></script>
+  <script src="js/goals.js"></script>
+  <script src="js/history.js"></script>
+  <script src="js/settings.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
