@@ -21,34 +21,34 @@ const PAGES = {
  * @param {string} pageName  
  */
 function navigate(pageName) {
-  if (!PAGES[pageName]) return;
+  if (!PAGES[pageName]) return
 
   // MAJ des liens actifs dans la sidebar
 
   document.querySelectorAll('.nav-link').forEach(link => {
-    link.classList.toggle('active', link.dataset.page === pageName);
-  });
+    link.classList.toggle('active', link.dataset.page === pageName)
+  })
 
   // Rendre la page
-  PAGES[pageName].render();
+  PAGES[pageName].render()
 }
 
 /* Navigation events*/
 document.querySelectorAll('.nav-link').forEach(link => {
-  link.addEventListener('click', () => navigate(link.dataset.page));
-});
+  link.addEventListener('click', () => navigate(link.dataset.page))
+})
 
 /* Initialisation */
 function init() {
   // Charger les données depuis localStorage
-  loadState();
+  loadState()
 
   // Initialiser les overlays de modals
-  UI.initModalOverlays();
+  UI.initModalOverlays()
 
   // Afficher la page d'accueil
-  navigate('dashboard');
+  navigate('dashboard')
 }
 
 // Lancer l'application une fois le DOM chargé ok
-document.addEventListener('DOMContentLoaded', init);
+document.addEventListener('DOMContentLoaded', init)
