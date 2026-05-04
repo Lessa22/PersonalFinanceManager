@@ -35,7 +35,7 @@ const Settings = (() => {
               l'application pour repartir de zéro.
             </p>
             <div style="display:flex;flex-direction:column;gap:10px">
-              <button class="btn btn-ghost" onclick="Settings.exportAll()">📤 Exporter tout (JSON)</button>
+              <button class="btn btn-ghost" onclick="Settings.exportAll()">📤 Exporter tout</button>
               <button class="btn btn-danger" onclick="Settings.resetAll()">🗑 Réinitialiser toutes les données</button>
             </div>
           </div>
