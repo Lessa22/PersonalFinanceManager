@@ -1,11 +1,10 @@
 
-
 const App = {
   dashMonth:   new Date(),
-  budgetMonth: new Date(), 
+  budgetMonth: new Date(),
 };
 
-// Importer les modules de page
+
 
 const PAGES = {
   dashboard: Dashboard,
@@ -16,39 +15,85 @@ const PAGES = {
   settings:  Settings,
 };
 
-/** Navigue vers une page donnée
- * 
- * @param {string} pageName  
+/**
+ * Navigue vers une page donnée.
+ * @param {string} pageName
  */
 function navigate(pageName) {
-  if (!PAGES[pageName]) return
+  if (!PAGES[pageName]) return;
 
   // MAJ des liens actifs dans la sidebar
-
   document.querySelectorAll('.nav-link').forEach(link => {
-    link.classList.toggle('active', link.dataset.page === pageName)
-  })
+    link.classList.toggle('active', link.dataset.page === pageName);
+  });
 
   // Rendre la page
-  PAGES[pageName].render()
+  PAGES[pageName].render();
 }
 
-/* Navigation events*/
 document.querySelectorAll('.nav-link').forEach(link => {
-  link.addEventListener('click', () => navigate(link.dataset.page))
-})
+  link.addEventListener('click', () => navigate(link.dataset.page));
+});
 
-/* Initialisation */
-function init() {
-  // Charger les données depuis localStorage
-  loadState()
 
-  // Initialiser les overlays de modals
-  UI.initModalOverlays()
 
-  // Afficher la page d'accueil
-  navigate('dashboard')
+function toggleTheme() {
+  document.documentElement.classList.toggle('light');
+  const isLight = document.documentElement.classList.contains('light');
+  localStorage.setItem('pfm_theme', isLight ? 'light' : 'dark');
+
+  // Mettre à jour le texte du bouton
+  const btn = document.getElementById('theme-toggle-btn');
+  if (btn) btn.textContent = isLight ? '🌙 Mode sombre' : '🌗 Mode clair';
 }
 
-// Lancer l'application une fois le DOM chargé ok
-document.addEventListener('DOMContentLoaded', init)
+/** Charge le dernier thème sélectionné */
+function loadTheme() {
+  const saved = localStorage.getItem('pfm_theme');
+  if (saved === 'light') {
+    document.documentElement.classList.add('light');
+  }
+}
+
+
+function animateValue(el, end, duration = 800) {
+  if (!el) return;
+  const start = 0;
+  let startTime = null;
+
+  function step(timestamp) {
+    if (!startTime) startTime = timestamp;
+    const progress = Math.min((timestamp - startTime) / duration, 1);
+    // easing : ease-out
+    const eased = 1 - Math.pow(1 - progress, 3);
+    el.textContent = 'Ar ' + Math.floor(eased * (end - start) + start).toLocaleString('fr-MG');
+    if (progress < 1) requestAnimationFrame(step);
+  }
+
+  requestAnimationFrame(step);
+}
+
+
+function init() {
+  // 1. Charger le thème sauvegardé
+  loadTheme();
+
+  // 2. Mettre à jour le label du bouton thème
+  const themeBtn = document.getElementById('theme-toggle-btn');
+  if (themeBtn) {
+    const isLight = document.documentElement.classList.contains('light');
+    themeBtn.textContent = isLight ? '🌙 Mode sombre' : '🌗 Mode clair';
+  }
+
+  // 3. Charger les données depuis localStorage
+  loadState();
+
+  // 4. Initialiser les overlays de modals
+  UI.initModalOverlays();
+
+  // 5. Afficher la page d'accueil
+  navigate('dashboard');
+}
+
+// Lancer l'application une fois le DOM chargé
+document.addEventListener('DOMContentLoaded', init);

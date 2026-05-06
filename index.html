@@ -10,12 +10,15 @@
 </head>
 <body>
 
+ 
   <aside id="sidebar">
+
     <div class="sidebar-logo">
       <div class="logo-icon">💲</div>
       <h1>FINANCE MANAGER</h1>
       <span>Gérez · Épargnez · Progressez</span>
     </div>
+
     <nav>
       <div class="nav-label">Menu</div>
       <a class="nav-link active" data-page="dashboard"><span class="nav-icon">📊</span> Tableau de bord</a>
@@ -27,28 +30,52 @@
       <div class="nav-label">Système</div>
       <a class="nav-link" data-page="settings"><span class="nav-icon">⚙️</span> Paramètres</a>
     </nav>
-    <div class="sidebar-footer">
-      Données locales uniquement<br />
-      <strong id="sidebar-balance">Ar 0</strong>
-    </div>
-  </aside>
-  
 
   
+    <div style="padding: 0 12px 12px;">
+      <div class="bank-card">
+        <div class="bank-card-label">Solde actuel</div>
+        <div class="bank-card-name">Mon compte</div>
+        <div class="bank-balance" id="sidebar-balance">Ar 0</div>
+        <div class="bank-card-footer">
+          <span class="bank-card-month" id="sidebar-month"></span>
+          <div class="bank-card-chip"></div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="sidebar-footer">
+      Thème de l'app<br />
+      <!-- 🌗 Bouton toggle thème -->
+      <button class="theme-btn" id="theme-toggle-btn" onclick="toggleTheme()">
+        🌗 Mode clair
+      </button>
+    </div>
+
+  </aside>
+
+
   <main id="main">
     <div id="page-container"></div>
   </main>
 
-    
+
 
   <div class="modal-overlay" id="modal-deposit">
     <div class="modal">
       <div class="modal-title">💰 Effectuer un dépôt</div>
-      <div class="form-group"><label>Montant (Ar)</label><input type="number" id="deposit-amount" placeholder="0" min="1" /></div>
-      <div class="form-group" style="margin-top:12px"><label>Note (facultatif)</label><input type="text" id="deposit-note" placeholder="ex: Économie du mois" /></div>
+      <div class="form-group">
+        <label>Montant (Ar)</label>
+        <input type="number" id="deposit-amount" placeholder="0" min="1" />
+      </div>
+      <div class="form-group" style="margin-top:12px">
+        <label>Note (facultatif)</label>
+        <input type="text" id="deposit-note" placeholder="ex: Économie du mois" />
+      </div>
       <div class="modal-footer">
         <button class="btn btn-ghost" onclick="UI.closeModal('modal-deposit')">Annuler</button>
-        <button class="btn btn-success" onclick="Goals.saveDeposit()">Déposer</button>
+        <button class="btn btn-success ripple" onclick="Goals.saveDeposit()">Déposer</button>
       </div>
     </div>
   </div>
@@ -56,14 +83,23 @@
   <div class="modal-overlay" id="modal-goal">
     <div class="modal">
       <div class="modal-title" id="modal-goal-title">🎯 Nouvel objectif</div>
-      <div class="form-group"><label>Nom de l'objectif</label><input type="text" id="goal-name" placeholder="ex: Vacances, Voiture…" /></div>
+      <div class="form-group">
+        <label>Nom de l'objectif</label>
+        <input type="text" id="goal-name" placeholder="ex: Vacances, Voiture…" />
+      </div>
       <div class="form-row cols-2" style="margin-top:12px">
-        <div class="form-group"><label>Montant cible (Ar)</label><input type="number" id="goal-target" placeholder="0" min="0" /></div>
-        <div class="form-group"><label>Échéance (facultatif)</label><input type="date" id="goal-deadline" /></div>
+        <div class="form-group">
+          <label>Montant cible (Ar)</label>
+          <input type="number" id="goal-target" placeholder="0" min="0" />
+        </div>
+        <div class="form-group">
+          <label>Échéance (facultatif)</label>
+          <input type="date" id="goal-deadline" />
+        </div>
       </div>
       <div class="modal-footer">
         <button class="btn btn-ghost" onclick="UI.closeModal('modal-goal')">Annuler</button>
-        <button class="btn btn-primary" onclick="Goals.saveGoal()">Enregistrer</button>
+        <button class="btn btn-primary ripple" onclick="Goals.saveGoal()">Enregistrer</button>
       </div>
     </div>
   </div>
@@ -71,8 +107,14 @@
   <div class="modal-overlay" id="modal-cat">
     <div class="modal">
       <div class="modal-title">🏷 Nouvelle catégorie</div>
-      <div class="form-group"><label>Nom</label><input type="text" id="cat-name" placeholder="ex: Alimentation, Loisirs…" /></div>
-      <div class="form-group" style="margin-top:12px"><label>Couleur</label><div class="color-options" id="color-options"></div></div>
+      <div class="form-group">
+        <label>Nom</label>
+        <input type="text" id="cat-name" placeholder="ex: Alimentation, Loisirs…" />
+      </div>
+      <div class="form-group" style="margin-top:12px">
+        <label>Couleur</label>
+        <div class="color-options" id="color-options"></div>
+      </div>
       <div class="form-group" style="margin-top:12px">
         <label>Sous-catégories (appuyer Entrée pour ajouter)</label>
         <input type="text" id="new-subcat-input" placeholder="ex: Épicerie, Restaurant…"
@@ -81,7 +123,7 @@
       <div class="chips" id="new-subcats-chips"></div>
       <div class="modal-footer">
         <button class="btn btn-ghost" onclick="UI.closeModal('modal-cat')">Annuler</button>
-        <button class="btn btn-primary" onclick="Settings.saveCat()">Créer</button>
+        <button class="btn btn-primary ripple" onclick="Settings.saveCat()">Créer</button>
       </div>
     </div>
   </div>
@@ -89,17 +131,19 @@
   <div class="modal-overlay" id="modal-subcat">
     <div class="modal" style="max-width:360px">
       <div class="modal-title">+ Sous-catégorie</div>
-      <div class="form-group"><label>Nom</label><input type="text" id="subcat-name" placeholder="Sous-catégorie…" /></div>
+      <div class="form-group">
+        <label>Nom</label>
+        <input type="text" id="subcat-name" placeholder="Sous-catégorie…" />
+      </div>
       <div class="modal-footer">
         <button class="btn btn-ghost" onclick="UI.closeModal('modal-subcat')">Annuler</button>
-        <button class="btn btn-primary" onclick="Settings.saveSubCat()">Ajouter</button>
+        <button class="btn btn-primary ripple" onclick="Settings.saveSubCat()">Ajouter</button>
       </div>
     </div>
   </div>
 
   <div id="toast-container"></div>
 
-  
   <script src="js/storage.js"></script>
   <script src="js/state.js"></script>
   <script src="js/ui.js"></script>
@@ -110,5 +154,16 @@
   <script src="js/history.js"></script>
   <script src="js/settings.js"></script>
   <script src="js/app.js"></script>
+
+  <!-- MAJ dans cB -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const el = document.getElementById('sidebar-month');
+      if (el) {
+        el.textContent = new Date().toLocaleDateString('fr-FR', { month: 'long', year: 'numeric' });
+      }
+    });
+  </script>
+
 </body>
 </html>
