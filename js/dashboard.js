@@ -194,7 +194,7 @@ const Dashboard = (() => {
       </div>`).join('')
   }
 
-  /* ── APERÇU OBJECTIFS ────────────────────────────────── */
+  /* APERÇU OBJECTIFS  */
   function renderGoalsPreview() {
     const el = document.getElementById('dash-goals')
     if (!AppState.goals.length) {

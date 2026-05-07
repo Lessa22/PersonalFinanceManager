@@ -22,4 +22,4 @@ Une application web pour gérer mon budget personnel en Ariary.
 
 ## Déploiement
 
-Déployé sur Vercel : 
+Déployé sur Vercel : https://personal-finance-manager-psi-liart-vercel.app
