@@ -141,7 +141,7 @@ const Settings = (() => {
     saveState();
     UI.toast('Catégorie créée ✓', 'success');
     UI.closeModal('modal-cat');
-    render(); // re-render la page entière pour mettre à jour le compteur
+    render(); 
   }
 
   function deleteCat(id) {

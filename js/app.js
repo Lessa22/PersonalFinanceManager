@@ -75,23 +75,23 @@ function animateValue(el, end, duration = 800) {
 
 
 function init() {
-  // 1. Charger le thème sauvegardé
+  // Charger le thème sauvegardé
   loadTheme();
 
-  // 2. Mettre à jour le label du bouton thème
+  //  Mettre à jour le label du bouton thème
   const themeBtn = document.getElementById('theme-toggle-btn');
   if (themeBtn) {
     const isLight = document.documentElement.classList.contains('light');
     themeBtn.textContent = isLight ? '🌙 Mode sombre' : '🌗 Mode clair';
   }
 
-  // 3. Charger les données depuis localStorage
+  // Charger les données depuis localStorage
   loadState();
 
-  // 4. Initialiser les overlays de modals
+  // Initialiser les overlays de modals
   UI.initModalOverlays();
 
-  // 5. Afficher la page d'accueil
+  // Afficher la page d'accueil
   navigate('dashboard');
 }
 
